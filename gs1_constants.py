@@ -1,3 +1,4 @@
+
 # Dictionary of GS1 Application Identifiers (AI) and their meanings, formats
 GS1_AIs = {
     '00': 'Serial Shipping Container Code (SSCC-18)',

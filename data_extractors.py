@@ -25,45 +25,45 @@ def get_country_from_prefix(company_prefix):
 def validate_gtin(gtin):
     """Validates and parses the GTIN, including check digit and company prefix country."""
     if len(gtin) not in [8, 12, 13, 14]:
-        return {"error": True, "message": "Invalid GTIN length"}
+        return {"error": True, "message": "Longitud de GTIN no válida"}
 
     expected_check_digit = calculate_check_digit(gtin)
     if int(gtin[-1]) != expected_check_digit:
-        return {"error": True, "message": f"Invalid Check Digit (Expected {expected_check_digit}, Got {gtin[-1]})"}
+        return {"error": True, "message": f"Dígito de control no válido (esperado {expected_check_digit}, obtubo {gtin[-1]})"}
 
     company_prefix = gtin[1:7] if len(gtin) == 14 else gtin[:7] if len(gtin) == 13 else gtin[:6]
     fields = {
-        "GTIN Type": f"GTIN-{len(gtin)}",
-        "Company Prefix": company_prefix,
-        "Item Reference": gtin[7:13] if len(gtin) >= 13 else gtin[6:11],
-        "Check Digit": gtin[-1],
-        "Country": get_country_from_prefix(company_prefix)
+        "Tipo GTIN": f"GTIN-{len(gtin)}",
+        "Prefijo de la empresa": company_prefix,
+        "Referencia del artículo": gtin[7:13] if len(gtin) >= 13 else gtin[6:11],
+        "Dígito de control": gtin[-1],
+        "País": get_country_from_prefix(company_prefix)
     }
     return {"error": False, "type": "GTIN", "fields": fields}
 
 def parse_sscc(sscc):
     """Parses and validates SSCC, including check digit and company prefix country."""
     if len(sscc) != 18:
-        return {"error": True, "message": "Invalid SSCC length"}
+        return {"error": True, "message": "Longitud SSCC no válida"}
 
     expected_check_digit = calculate_check_digit(sscc)
     if int(sscc[-1]) != expected_check_digit:
-        return {"error": True, "message": f"Invalid SSCC Check Digit (Expected {expected_check_digit}, Got {sscc[-1]})"}
+        return {"error": True, "message": f"Dígito de control SSCC no válido (esperado {expected_check_digit}, obtubo {sscc[-1]})"}
 
     company_prefix = sscc[1:8]
     fields = {
-        "SSCC Type": "SSCC-18",
-        "Company Prefix": company_prefix,
-        "Serial Reference": sscc[8:17],
-        "Check Digit": sscc[-1],
-        "Country": get_country_from_prefix(company_prefix)
+        "Tipo SSCC": "SSCC-18",
+        "Prefijo de la empresa": company_prefix,
+        "Numero secuencia": sscc[8:17],
+        "Dígito de control": sscc[-1],
+        "País": get_country_from_prefix(company_prefix)
     }
     return {"error": False, "type": "SSCC", "fields": fields}
 
 def parse_expiration_or_best_before_date(value, date_type):
     """Parses expiration or best before date."""
     if len(value) != 6:
-        return {"error": True, "message": "Invalid Date Length"}
+        return {"error": True, "message": "Longitud de fecha no válida"}
 
     year = "20" + value[0:2]
     month = value[2:4]
@@ -77,7 +77,7 @@ def parse_batch_or_serial_number(value, code_type):
 def parse_weight_or_amount(value, code_type, decimal_places):
     """Parses net weight or monetary amount based on decimal precision."""
     if len(value) < 1:
-        return {"error": True, "message": f"Invalid {code_type}"}
+        return {"error": True, "message": f"Codigo Inválido {code_type}"}
 
     integer_part = value[:-decimal_places] if decimal_places else value
     decimal_part = value[-decimal_places:] if decimal_places else ""

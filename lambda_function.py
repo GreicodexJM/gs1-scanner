@@ -1,6 +1,6 @@
 import json
 from parsers import parse_code
-from gs1_constants import GS1_AIs
+from gs1_constants_es import GS1_AIs
 
 def lambda_handler(event, context):
     if event.get('body') :
@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     if not gs1_barcode:
         return {
             'statusCode': 400,
-            'body': json.dumps({'error': True, 'message': 'No GS1 barcode provided.'})
+            'body': json.dumps({'error': True, 'message': 'No se proporciona código de barras GS1.'})
         }
 
     parsed_data = {}
