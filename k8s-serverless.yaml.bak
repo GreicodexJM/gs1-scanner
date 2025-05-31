@@ -1,0 +1,23 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: gs1api
+  namespace: default
+spec:
+  template:
+    metadata:
+      # This annotation tells Knative to allow scaling to zero.
+      annotations:
+        autoscaling.knative.dev/minScale: "0"
+    spec:
+      containers:
+      - image: greicodex/gs1:c0caf29
+        ports:
+        - containerPort: 80
+        env:
+          # Set an environment flag (change "dev" to "prod" or "qa" as needed)
+          - name: ENVIRONMENT
+            value: "prod"
+          # PostgreSQL connection settings are read from the secret:
+
+
