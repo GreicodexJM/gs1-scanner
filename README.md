@@ -1,3 +1,5 @@
+![logo](https://greicodex.com/images/Logo.png)
+![gs1](https://images.seeklogo.com/logo-png/49/1/gs1-logo-png_seeklogo-493811.png)
 ### **GS1 Barcode Parsing API Documentation**
 
 This document describes the GS1 Barcode Parsing API, which can be accessed via the following Lambda URL:
